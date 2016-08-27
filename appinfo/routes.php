@@ -1,9 +1,9 @@
 <?php
-
 /**
- * ownCloud - Audio Player - Timer
+ * ownCloud - Audio Player
  *
  * @author Marcel Scherello
+ * @author Sebastian Doell
  * @copyright 2015 sebastian doell sebastian@libasys.de
  *
  * This library is free software; you can redistribute it and/or
@@ -20,22 +20,13 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
- 
- namespace OCA\audioplayer_timer\AppInfo;
- 
-$app = new Application();
-$c = $app->getContainer();
-// add an navigation entry
+namespace OCA\audioplayer_timer\AppInfo;
 
-$navigationEntry = function () use ($c) {
-	return [
-		'id' => $c->getAppName(),
-		'order' => 22,
-		'name' => $c->query('L10N')->t('Audio Player - Timer'),
-		'href' => $c->query('URLGenerator')->linkToRoute('audioplayer_timer.page.index'),
-		'icon' => $c->query('URLGenerator')->imagePath('audioplayer_timer', 'app.svg'),
-	];
-};
-//$c->getServer()->getNavigationManager()->add($navigationEntry);
+use \OCA\audioplayer_timer\AppInfo\Application;
 
-\OCP\App::registerPersonal($c->query('AppName'), 'settings/user');
+$application = new Application();
+
+$application->registerRoutes($this, ['routes' => [
+	['name' => 'timer#getTimer', 'url' => '/gettimer', 'verb' => 'GET'],
+	['name' => 'timer#setTimer', 'url' => '/settimer', 'verb' => 'GET'],
+]]);
